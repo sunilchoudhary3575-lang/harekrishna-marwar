@@ -1,0 +1,128 @@
+.section {
+  background: var(--bg-primary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.videoSide {
+  position: relative;
+}
+
+.videoPlaceholder {
+  aspect-ratio: 16/9;
+  border-radius: var(--radius-xl);
+  background: #111;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--border-light);
+}
+
+/* ── Thumbnail cover ── */
+.thumbnailWrapper {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+
+.videoThumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.videoOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(44, 44, 44, 0.12) 0%, rgba(44, 44, 44, 0.42) 100%);
+  pointer-events: none;
+}
+
+.playBtnContainer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.playBtn {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--saffron);
+  border: 3px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-base);
+  box-shadow: var(--shadow-md);
+  pointer-events: auto;
+}
+
+.thumbnailWrapper:hover .playBtn {
+  transform: scale(1.1);
+  background: var(--saffron-light);
+}
+
+/* ── YouTube iframe ── */
+.videoIframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ── Text side ── */
+.heading {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  color: var(--text-primary);
+  margin-bottom: 1.25rem;
+  line-height: 1.3;
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .videoPlaceholder {
+    border-radius: var(--radius-lg);
+  }
+
+  .playBtn {
+    width: 60px;
+    height: 60px;
+  }
+
+  .heading {
+    font-size: clamp(1.4rem, 5vw, 1.9rem);
+    margin-bottom: 1rem;
+  }
+
+  .body {
+    font-size: 1rem;
+    text-align: left;
+  }
+}

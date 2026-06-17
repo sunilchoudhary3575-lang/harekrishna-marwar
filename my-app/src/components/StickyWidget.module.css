@@ -1,0 +1,100 @@
+.widget {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 2px solid var(--saffron);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+  z-index: 99;
+  display: none; /* Hidden on desktop */
+}
+
+.container {
+  max-width: 768px;
+  margin: 0 auto;
+  height: 72px;
+  padding: 0 var(--space-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.heartIcon {
+  color: var(--saffron);
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.textWrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
+.btnWidget {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.85rem;
+  min-height: 42px;
+  white-space: nowrap;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.18);
+  }
+}
+
+/* Show only on Mobile/Tablet screens */
+@media (max-width: 1024px) {
+  .widget {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
+    height: 68px;
+  }
+  
+  .title {
+    font-size: 0.85rem;
+  }
+  
+  .subtitle {
+    font-size: 0.7rem;
+  }
+  
+  .btnWidget {
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    min-height: 38px;
+  }
+}

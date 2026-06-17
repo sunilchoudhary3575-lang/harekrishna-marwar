@@ -1,0 +1,217 @@
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.countUnit {
+  text-align: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.5rem;
+  min-width: 80px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.countUnit:hover {
+  border-color: rgba(107, 142, 122, 0.3);
+  box-shadow: 0 6px 20px rgba(107, 142, 122, 0.1);
+}
+
+.countNum {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: #c96a10;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.countLabel {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  margin-top: 0.3rem;
+  display: block;
+}
+
+.meterCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  max-width: 700px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-sm);
+}
+
+.meterInfo {
+  flex: 1;
+}
+
+.meterTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.meterTitle {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+}
+
+.meterSub {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.meterPercent {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  color: #c96a10;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.progressTrack {
+  width: 100%;
+  height: 16px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border-light);
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green-earth), var(--saffron), var(--gold));
+  border-radius: var(--radius-full);
+  position: relative;
+}
+
+.progressFill::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--saffron);
+  border: 3px solid white;
+  box-shadow: var(--shadow-md);
+}
+
+.meterBottom {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  text-align: center;
+}
+
+.meterStat {
+  display: flex;
+  flex-direction: column;
+}
+
+.meterStatNum {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.meterStatLabel {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.socialProof {
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  margin: 1.25rem 0 0;
+  line-height: 1.6;
+}
+
+.socialProof strong {
+  color: var(--saffron);
+}
+
+.weeklyBadge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  background: rgba(230, 126, 34, 0.1);
+  border: 1px solid rgba(230, 126, 34, 0.2);
+  border-radius: var(--radius-full);
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--saffron);
+  white-space: nowrap;
+}
+
+.emotionalHook {
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin: 0.75rem 0 0;
+  line-height: 1.6;
+}
+
+.microCtaLine {
+  text-align: center;
+  margin-top: 0.75rem;
+}
+
+.microCtaLink {
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.microCtaLink:hover {
+  color: var(--saffron);
+}
+
+@media (max-width: 768px) {
+  .meterCard { padding: 1.25rem; }
+  .meterTop { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .meterPercent { font-size: 2rem; }
+  .countdown { gap: 0.75rem; }
+  .countUnit { min-width: 0; flex: 1; padding: 0.75rem 0.5rem; }
+  .countNum { font-size: 1.4rem; }
+  .countLabel { font-size: 0.6rem; }
+  .meterBottom { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+  .meterStatNum { font-size: 1.1rem; }
+  .meterStatLabel { font-size: 0.58rem; }
+}
+
+@media (max-width: 400px) {
+  .countdown { gap: 0.5rem; }
+  .countNum { font-size: 1.2rem; }
+}

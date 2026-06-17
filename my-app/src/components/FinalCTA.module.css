@@ -1,0 +1,120 @@
+.section {
+  padding: 6rem 0;
+  background: linear-gradient(135deg, var(--saffron-light), var(--maroon-deep));
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 10%, rgba(10, 8, 5, 0.4) 100%);
+  pointer-events: none;
+}
+
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.heartWrapper {
+  width: 70px;
+  height: 70px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-xs);
+  box-shadow: 0 8px 32px rgba(230, 126, 34, 0.3);
+  animation: float 4s ease-in-out infinite;
+}
+
+.heartIcon {
+  color: white;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  line-height: 1.25;
+  color: #ffffff;
+  font-weight: 600;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  line-height: 1.65;
+  color: #fcefe3;
+  margin-bottom: var(--space-sm);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btnGold {
+  padding: 1rem 2.5rem;
+  background: #ffffff;
+  color: var(--maroon-deep);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 1.05rem;
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-full);
+}
+
+.btnGold:hover {
+  transform: translateY(-2px) scale(1.03);
+  background: #fff8f0;
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(255, 255, 255, 0.5);
+  color: var(--saffron-light);
+}
+
+.taxBenefit {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #ffe6cc;
+  text-transform: uppercase;
+  margin-top: var(--space-xs);
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section {
+    padding: 4.5rem 0;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+  
+  .btnGold {
+    padding: 0.9rem 2rem;
+    font-size: 0.95rem;
+  }
+}
