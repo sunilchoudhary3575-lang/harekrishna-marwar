@@ -1,0 +1,10 @@
+{
+  "name": "harekrishna-root",
+  "version": "1.0.0",
+  "description": "Root configuration to run scripts for my-app",
+  "scripts": {
+    "dev": "npm run dev --prefix my-app",
+    "build": "npm run build --prefix my-app",
+    "preview": "npm run preview --prefix my-app"
+  }
+}
