@@ -130,21 +130,7 @@
 }
 
 .dotActive::after {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.dotProgress {
-  position: absolute;
-  inset: 0;
   background: rgba(255, 255, 255, 0.95);
-  border-radius: 2px;
-  animation: dotFill 4s linear forwards;
-  transform-origin: left;
-}
-
-@keyframes dotFill {
-  0% { transform: scaleX(0); }
-  100% { transform: scaleX(1); }
 }
 
 /* ── Arrow Buttons ── */
@@ -229,8 +215,5 @@
     transform: none;
   }
 
-  .dotProgress {
-    animation: none;
-    transform: scaleX(1);
-  }
+
 }

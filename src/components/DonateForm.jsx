@@ -47,6 +47,7 @@ const otherAmounts = [5100, 11000, 21000, 51000];
 
 export default function DonateForm({ defaultSevaId = null, embedded = null }) {
   const isEmbedded = embedded !== null ? embedded : (window.location.pathname !== '/donate');
+  const useSplitLayout = window.location.pathname === '/';
   const [deepLinkedData, setDeepLinkedData] = useState(null);
   const [step, setStep] = useState(1); // 1=details, 2=payment
   const [selectedSeva, setSelectedSeva] = useState(() => {
@@ -152,10 +153,22 @@ export default function DonateForm({ defaultSevaId = null, embedded = null }) {
     setCustomAmount(String(parsed));
   }, [deepLinkedData]);
 
+  const scrollToSummary = () => {
+    if (window.innerWidth <= 768) {
+      setTimeout(() => {
+        const summaryElement = document.getElementById('embedded-seva-summary');
+        if (summaryElement) {
+          summaryElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 80);
+    }
+  };
+
   const handleSevaSelect = (seva) => {
     setSelectedSeva(seva);
     setInputQuantity(String(seva.presets[0].q));
     setCustomAmount('');
+    scrollToSummary();
   };
 
   const handleQuickAmount = (amt) => {
@@ -376,202 +389,248 @@ export default function DonateForm({ defaultSevaId = null, embedded = null }) {
               {step === 1 && (
                 <motion.div
                   key="step1"
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -16 }}
+                  className={useSplitLayout ? styles.step1Layout : styles.step1StackedLayout}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
                   transition={{ duration: 0.24, ease: 'easeOut' }}
                 >
-                  <h2 className={styles.stepTitle}>Donation Details</h2>
-                  <div className={styles.sevaGrid}>
-                    {sevaOptions.map((s) => (
+                  {/* Left Column: Tiles */}
+                  <div className={styles.tilesCol}>
+                    <h2 className={styles.stepTitle}>Donation Details</h2>
+                    <div className={styles.sevaGrid}>
+                      {sevaOptions.map((s) => (
+                        <button
+                          key={s.id}
+                          type="button"
+                          className={`${styles.sevaCard} ${selectedSeva?.id === s.id ? styles.sevaSelected : ''}`}
+                          onClick={() => handleSevaSelect(s)}
+                        >
+                          <span className={styles.sevaIcon}>{s.icon}</span>
+                          <div className={styles.sevaInfo}>
+                            <strong>{s.name}</strong>
+                            <span className={styles.sevaImpact}>{s.impact}</span>
+                          </div>
+                          <span className={styles.sevaAmt}>₹{s.amount.toLocaleString()}</span>
+                        </button>
+                      ))}
+                      
                       <button
-                        key={s.id}
-                        className={`${styles.sevaCard} ${selectedSeva?.id === s.id ? styles.sevaSelected : ''}`}
-                        onClick={() => handleSevaSelect(s)}
+                        type="button"
+                        className={`${styles.sevaCard} ${!selectedSeva ? styles.sevaSelected : ''}`}
+                        onClick={() => { setSelectedSeva(null); setCustomAmount('1100'); scrollToSummary(); }}
                       >
-                        <span className={styles.sevaIcon}>{s.icon}</span>
+                        <span className={styles.sevaIcon}>🙏</span>
                         <div className={styles.sevaInfo}>
-                          <strong>{s.name}</strong>
-                          <span className={styles.sevaImpact}>{s.impact}</span>
+                          <strong>General Donation</strong>
+                          <span className={styles.sevaImpact}>Support all activities</span>
                         </div>
-                        <span className={styles.sevaAmt}>₹{s.amount.toLocaleString()}</span>
+                        <span className={styles.sevaAmt}>Any Amount</span>
                       </button>
-                    ))}
+                    </div>
+
+                    {/* Deep-link confirmation banner */}
+                    <AnimatePresence>
+                      {deepLinkedSeva && selectedSeva?.id === deepLinkedSeva.id && (
+                        <motion.div
+                          className={styles.deepLinkBanner}
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                        >
+                          <span>✅ You chose: <strong>{deepLinkedSeva.name}</strong></span>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Right Column: Seva Summary & Dynamic Quantity Selector */}
+                  <div className={styles.summaryBox} id="embedded-seva-summary">
+                    <h3 className={styles.summaryTitle}>Seva Summary</h3>
                     
-                    <button
-                      className={`${styles.sevaCard} ${!selectedSeva ? styles.sevaSelected : ''}`}
-                      onClick={() => { setSelectedSeva(null); setCustomAmount('1100'); }}
-                    >
-                      <span className={styles.sevaIcon}>🙏</span>
-                      <div className={styles.sevaInfo}>
-                        <strong>General Donation</strong>
-                        <span className={styles.sevaImpact}>Support all activities</span>
+                    <div className={styles.selectedSevaHeader}>
+                      <span className={styles.selectedSevaIcon}>
+                        {selectedSeva ? selectedSeva.icon : '🙏'}
+                      </span>
+                      <div className={styles.selectedSevaInfo}>
+                        <strong>{selectedSeva ? selectedSeva.name : 'General Donation'}</strong>
+                        <span>{selectedSeva ? selectedSeva.impact : 'Support daily temple activities & Vedic mission'}</span>
                       </div>
-                      <span className={styles.sevaAmt}>Any Amount</span>
-                    </button>
-                  </div>
+                    </div>
 
-                  {/* Deep-link confirmation banner */}
-                  <AnimatePresence>
-                    {deepLinkedSeva && selectedSeva?.id === deepLinkedSeva.id && (
-                      <motion.div
-                        className={styles.deepLinkBanner}
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                      >
-                        <span>✅ You chose: <strong>{deepLinkedSeva.name}</strong></span>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  <AnimatePresence>
-                    {selectedSeva?.id === 'mandir-nirman' && (
-                      <motion.div 
-                        className={styles.giftNotification}
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                      >
-                        <Gift className={styles.giftIcon} size={20} />
-                        <div className={styles.giftText}>
-                          <span className={styles.giftTitle}>Special Krishna Gift Included!</span>
-                          <span className={styles.giftList}>
-                            You will receive: <span className={styles.giftHighlight}>Calendar, Jaap Mala, Prasadam & Gita Sar book</span>.
-                          </span>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  <div className={styles.quickSection}>
-                    {selectedSeva ? (
-                      <>
-                        <label className={styles.fieldLabel}>Choose Quantity</label>
-                        <div className={styles.quickGrid}>
-                          {selectedSeva.presets?.map((p) => {
-                            const isActivePreset = p.amt 
-                              ? customAmount === String(p.amt)
-                              : (!customAmount && Number(inputQuantity) === p.q);
-                            const priceVal = p.amt ? p.amt : selectedSeva.unitPrice * p.q;
-                            return (
+                    {/* Dynamic Inputs depending on selected seva tile */}
+                    <div className={styles.quantitySection}>
+                      {selectedSeva ? (
+                        <>
+                          <label className={styles.fieldLabel}>Choose Quantity</label>
+                          <div className={styles.quickGrid}>
+                            {selectedSeva.presets?.map((p) => {
+                              const isActivePreset = p.amt 
+                                ? customAmount === String(p.amt)
+                                : (!customAmount && Number(inputQuantity) === p.q);
+                              const priceVal = p.amt ? p.amt : selectedSeva.unitPrice * p.q;
+                              return (
+                                <button
+                                  key={p.q}
+                                  type="button"
+                                  className={`${styles.quickBtn} ${isActivePreset ? styles.quickActive : ''}`}
+                                  onClick={() => { 
+                                    setInputQuantity(String(p.q)); 
+                                    if (p.amt) {
+                                      setCustomAmount(String(p.amt));
+                                    } else {
+                                      setCustomAmount('');
+                                    }
+                                  }}
+                                >
+                                  {p.label} <br/><small style={{opacity: 0.85, fontSize: '0.8em', marginTop: '2px', display: 'block'}}>₹{priceVal.toLocaleString()}</small>
+                                </button>
+                              );
+                            })}
+                          </div>
+                          <label className={styles.fieldLabel} style={{ marginTop: '0.75rem' }}>
+                            Or Enter Custom No. of {selectedSeva.unitLabel}
+                          </label>
+                          <div className={styles.customRow}>
+                            <span className={styles.currencyIcon}>{selectedSeva.icon}</span>
+                            <input
+                              type="number"
+                              placeholder={`Enter no of ${selectedSeva.unitLabel.toLowerCase()}`}
+                              value={inputQuantity}
+                              onChange={(e) => { setInputQuantity(e.target.value); setCustomAmount(''); }}
+                              className={styles.customInput}
+                              min="1"
+                            />
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <label className={styles.fieldLabel}>Quick Choose Amount</label>
+                          <div className={styles.featuredAmountGrid}>
+                            {featuredAmounts.map((item) => (
                               <button
-                                key={p.q}
-                                className={`${styles.quickBtn} ${isActivePreset ? styles.quickActive : ''}`}
-                                onClick={() => { 
-                                  setInputQuantity(String(p.q)); 
-                                  if (p.amt) {
-                                    setCustomAmount(String(p.amt));
-                                  } else {
-                                    setCustomAmount('');
-                                  }
-                                }}
+                                key={item.amount}
+                                type="button"
+                                className={`${styles.featuredAmountCard} ${Number(customAmount) === item.amount ? styles.featuredAmountActive : ''}`}
+                                onClick={() => handleQuickAmount(item.amount)}
                               >
-                                {p.label} <br/><small style={{opacity: 0.8, fontSize: '0.85em', marginTop: '4px', display: 'block'}}>₹{priceVal.toLocaleString()}</small>
+                                <span className={styles.featuredAmountValue}>₹{item.amount.toLocaleString()}</span>
+                                <span className={styles.featuredAmountImpact}>{item.impact}</span>
+                                {item.recommended && <span className={styles.recommendedTag}>Rec.</span>}
                               </button>
-                            );
-                          })}
-                        </div>
-                        <label className={styles.fieldLabel} style={{ marginTop: '1.5rem' }}>
-                          Or Enter Custom Number of {selectedSeva.unitLabel}
-                        </label>
-                        <div className={styles.customRow}>
-                          <span className={styles.currency} style={{ fontSize: '1.2rem', padding: '0 0.8rem' }}>{selectedSeva.icon}</span>
-                          <input
-                            type="number"
-                            placeholder={`Enter no of ${selectedSeva.unitLabel.toLowerCase()}`}
-                            value={inputQuantity}
-                            onChange={(e) => { setInputQuantity(e.target.value); setCustomAmount(''); }}
-                            className={styles.customInput}
-                            min="1"
-                          />
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <label className={styles.fieldLabel}>Quick Choose Amount</label>
-                        <div className={styles.featuredAmountGrid}>
-                          {featuredAmounts.map((item) => (
-                            <button
-                              key={item.amount}
-                              className={`${styles.featuredAmountCard} ${Number(customAmount) === item.amount ? styles.featuredAmountActive : ''}`}
-                              onClick={() => handleQuickAmount(item.amount)}
-                            >
-                              <span className={styles.featuredAmountValue}>₹{item.amount.toLocaleString()}</span>
-                              <span className={styles.featuredAmountImpact}>{item.impact}</span>
-                              {item.recommended && <span className={styles.recommendedTag}>Recommended</span>}
-                            </button>
-                          ))}
-                        </div>
+                            ))}
+                          </div>
 
-                        <label className={styles.fieldLabel}>Other Amount</label>
-                        <div className={styles.quickGrid}>
-                          {otherAmounts.map((a) => (
-                            <button
-                              key={a}
-                              className={`${styles.quickBtn} ${Number(customAmount) === a ? styles.quickActive : ''}`}
-                              onClick={() => handleQuickAmount(a)}
-                            >
-                              ₹{a.toLocaleString()}
-                            </button>
-                          ))}
-                        </div>
-                      </>
+                          <label className={styles.fieldLabel} style={{ marginTop: '0.75rem' }}>
+                            Other Presets
+                          </label>
+                          <div className={styles.quickGrid}>
+                            {otherAmounts.map((a) => (
+                              <button
+                                key={a}
+                                type="button"
+                                className={`${styles.quickBtn} ${Number(customAmount) === a ? styles.quickActive : ''}`}
+                                onClick={() => handleQuickAmount(a)}
+                              >
+                                ₹{a.toLocaleString()}
+                              </button>
+                            ))}
+                          </div>
+                          
+                          <label className={styles.fieldLabel} style={{ marginTop: '0.75rem' }}>
+                            Or Enter Custom Amount
+                          </label>
+                          <div className={styles.customRow}>
+                            <span className={styles.currencySymbol}>₹</span>
+                            <input
+                              type="number"
+                              placeholder="Enter custom amount"
+                              value={customAmount}
+                              onChange={(e) => setCustomAmount(e.target.value)}
+                              className={styles.customInput}
+                              min="1"
+                            />
+                          </div>
+                        </>
+                      )}
+                    </div>
+
+                    {/* Special Gift Alerts */}
+                    <AnimatePresence>
+                      {selectedSeva?.id === 'mandir-nirman' && (
+                        <motion.div 
+                          className={styles.giftNotification}
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                        >
+                          <Gift className={styles.giftIcon} size={18} />
+                          <div className={styles.giftText}>
+                            <span className={styles.giftTitle}>Special Gift Included!</span>
+                            <span className={styles.giftList}>
+                              Calendar, Jaap Mala, Deities Photo Card & Gita book.
+                            </span>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    {/* Total Summary Row */}
+                    <div className={styles.summaryTotalRow}>
+                      <span className={styles.totalLabel}>Total Seva Amount:</span>
+                      <span className={styles.totalValue}>₹{amount.toLocaleString()}</span>
+                    </div>
+
+                    {/* Monthly / One-time Toggle */}
+                    <div className={styles.monthlyToggle}>
+                      <button
+                        type="button"
+                        className={`${styles.toggleBtn} ${!isMonthly ? styles.toggleActive : ''}`}
+                        onClick={() => setIsMonthly(false)}
+                      >
+                        One-time
+                      </button>
+                      <button
+                        type="button"
+                        className={`${styles.toggleBtn} ${isMonthly ? styles.toggleActive : ''}`}
+                        onClick={() => setIsMonthly(true)}
+                      >
+                        <RefreshCw size={12} /> Monthly
+                      </button>
+                    </div>
+                    {isMonthly && (
+                      <p className={styles.monthlyNote}>
+                        💛 Will charge ₹{amount.toLocaleString()}/month. Cancel anytime.
+                      </p>
                     )}
 
-                    {!selectedSeva && (
-                      <div className={styles.customRow}>
-                        <span className={styles.currency}>₹</span>
-                        <input
-                          type="number"
-                          placeholder="₹500 / ₹1,100 / ₹2,100 / Custom"
-                          value={customAmount}
-                          onChange={(e) => setCustomAmount(e.target.value)}
-                          className={styles.customInput}
-                          min="1"
-                        />
-                      </div>
-                    )}
-                  </div>
-
-                  <button
-                    className={`btn btn-donate ${styles.nextBtn}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const sevaId = selectedSeva?.id || 'general';
-                      let redirectUrl = `${DONATE_URL}?seva=${sevaId}&amount=${amount}`;
-                      if (isMonthly) {
-                        redirectUrl += '&recurring=true';
-                      }
-                      window.location.href = redirectUrl;
-                    }}
-                    disabled={!amount || amount < 1}
-                  >
-                    Donate Now <ChevronRight size={18} />
-                  </button>
-
-                  {/* Monthly / One-time toggle */}
-                  <div className={styles.monthlyToggle}>
+                    {/* Donate Now Button */}
                     <button
-                      type="button"
-                      className={`${styles.toggleBtn} ${!isMonthly ? styles.toggleActive : ''}`}
-                      onClick={() => setIsMonthly(false)}
+                      className={`btn btn-donate ${styles.nextBtn}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const sevaId = selectedSeva?.id || 'general';
+                        let redirectUrl = `${DONATE_URL}?seva=${sevaId}&amount=${amount}`;
+                        if (isMonthly) {
+                          redirectUrl += '&recurring=true';
+                        }
+                        window.location.href = redirectUrl;
+                      }}
+                      disabled={!amount || amount < 1}
                     >
-                      One-time
+                      Donate Now <ChevronRight size={18} />
                     </button>
-                    <button
-                      type="button"
-                      className={`${styles.toggleBtn} ${isMonthly ? styles.toggleActive : ''}`}
-                      onClick={() => setIsMonthly(true)}
-                    >
-                      <RefreshCw size={14} /> Monthly
-                    </button>
-                  </div>
-                  {isMonthly && (
-                    <p className={styles.monthlyNote}>
-                      💛 You&apos;ll be charged ₹{amount.toLocaleString()}/month. Cancel anytime. Monthly givers become part of the <strong>Marwar Temple Guardians</strong> circle.
+
+                    <div className={styles.summaryTrustBadges}>
+                      <span className={styles.summaryTrustBadge}><Shield size={14} /> Secure Payment</span>
+                      <span className={styles.summaryTrustBadge}><CreditCard size={14} /> ICICI Bank Gateway</span>
+                      <span className={styles.summaryTrustBadge}><Heart size={14} /> 80G Tax Benefit Available</span>
+                    </div>
+
+                    <p className={styles.summaryFootnote}>
+                      All donations go directly to Hare Krishna Movement Jodhpur. You will receive a receipt via email.
                     </p>
-                  )}
+                  </div>
                 </motion.div>
               )}
 

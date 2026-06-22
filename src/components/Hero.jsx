@@ -1,5 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Landmark, Heart, Sparkles } from 'lucide-react';
 import styles from './Hero.module.css';
 import PosterCarousel from './PosterCarousel';
 import TrustBar from './TrustBar';
@@ -23,7 +25,7 @@ export default function Hero() {
 
   const handleSponsorAnnadan = (e) => {
     e.preventDefault();
-    const slabsElement = document.getElementById('seva-slabs');
+    const slabsElement = document.getElementById('donation-form');
     if (slabsElement) {
       slabsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -34,7 +36,7 @@ export default function Hero() {
       {/* Full-width auto-scrolling poster carousel */}
       <PosterCarousel />
 
-      {/* Compact headline + CTA block below carousel */}
+      {/* Headline + Cards + CTA block below carousel */}
       <motion.div
         className={styles.heroContent}
         variants={stagger}
@@ -52,6 +54,37 @@ export default function Hero() {
             <motion.p variants={fadeUp} className={styles.microCta} style={{ fontSize: '1.05rem', maxWidth: '620px', margin: '0 auto', lineHeight: '1.5' }}>
               Your contribution helps provide sacred prasadam, support temple activities, and spread spiritual welfare across the Jodhpur region.
             </motion.p>
+
+            {/* Quick Seva Square Tiles */}
+            <motion.div variants={fadeUp} className={styles.squareGrid}>
+              <Link to="/seva/anna-daan" className={styles.squareTile}>
+                <span className={styles.tileIcon}>🍛</span>
+                <h3 className={styles.tileTitle}>Anna Daan Seva</h3>
+                <span className={styles.tileImpact}>Feed 25 People</span>
+                <span className={styles.tileAmount}>₹1,100</span>
+              </Link>
+
+              <Link to="/seva/mandir-nirman" className={styles.squareTile}>
+                <span className={styles.tileIcon}>🛕</span>
+                <h3 className={styles.tileTitle}>Mandir Nirman Seva</h3>
+                <span className={styles.tileImpact}>1 Sq Ft of Mandir</span>
+                <span className={styles.tileAmount}>₹2,500</span>
+              </Link>
+
+              <Link to="/seva/gau-seva" className={styles.squareTile}>
+                <span className={styles.tileIcon}>🐄</span>
+                <h3 className={styles.tileTitle}>Gau Seva</h3>
+                <span className={styles.tileImpact}>1 Day Care</span>
+                <span className={styles.tileAmount}>₹2,100</span>
+              </Link>
+
+              <a href={DONATE_URL} className={styles.squareTile}>
+                <span className={styles.tileIcon}>🙏</span>
+                <h3 className={styles.tileTitle}>General Donation</h3>
+                <span className={styles.tileImpact}>Support all activities</span>
+                <span className={styles.tileAmount}>Any Amount</span>
+              </a>
+            </motion.div>
 
             <motion.div variants={fadeUp} className={styles.ctaRow} style={{ marginTop: '0.5rem' }}>
               <button onClick={handleDonateNow} className={`btn ${styles.primaryCta}`} aria-label="Donate online now to support Annadan Seva">

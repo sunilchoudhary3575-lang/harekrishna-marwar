@@ -8,21 +8,25 @@ const cards = [
     icon: Soup,
     title: 'Spiritual Prasadam Distribution',
     desc: 'We do not just feed stomachs; we nourish souls. Every meal is offered first to Lord Krishna, converting it into sanctified prasadam that purifies the heart and brings peace.',
+    bgImage: '/gallery/gallery-anna-daan-serving.jpg',
   },
   {
     icon: BookOpen,
     title: 'Vedic Wisdom for Youth',
     desc: 'Empower the next generation with values from the Bhagavad Gita. Your seva funds the free distribution of spiritual books, moral education classes, and value-based training.',
+    bgImage: '/explore-youth.jpg',
   },
   {
     icon: Heart,
     title: 'Sacred Cow Protection',
     desc: 'Support our Jodhpur Gaushala providing medical care, green fodder, and clean shelter to abandoned cows, preserving Vedic traditions of Go-Raksha and spiritual ecology.',
+    bgImage: '/gallery/gallery-gau-seva-volunteer.jpg',
   },
   {
     icon: Tent,
     title: 'Grand Temple Nirman',
     desc: 'Help construct the upcoming Hare Krishna Marwar Mandir. By sponsoring brick by brick, you construct a permanent spiritual home that will radiate divine energy for generations.',
+    bgImage: '/explore-darshan.jpg',
   },
 ];
 
@@ -60,11 +64,22 @@ export default function WhyDonate() {
             return (
               <ScrollReveal key={card.title} delay={0.1 + i * 0.08} y={30}>
                 <div className={styles.card}>
-                  <div className={styles.iconCircle}>
-                    <Icon size={24} className={styles.icon} />
+                  {/* Background Image Container */}
+                  <div 
+                    className={styles.cardBg}
+                    style={{ backgroundImage: `url(${card.bgImage})` }}
+                  />
+                  {/* Gradient Overlay */}
+                  <div className={styles.cardOverlay} />
+
+                  {/* Card Content Wrapper */}
+                  <div className={styles.cardContent}>
+                    <div className={styles.iconCircle}>
+                      <Icon size={24} className={styles.icon} />
+                    </div>
+                    <h3 className={styles.cardTitle}>{card.title}</h3>
+                    <p className={styles.cardDesc}>{card.desc}</p>
                   </div>
-                  <h3 className={styles.cardTitle}>{card.title}</h3>
-                  <p className={styles.cardDesc}>{card.desc}</p>
                 </div>
               </ScrollReveal>
             );

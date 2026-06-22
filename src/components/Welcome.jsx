@@ -72,7 +72,7 @@ export default function Welcome() {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                document.getElementById('seva-slabs')?.scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('donation-form')?.scrollIntoView({ behavior: 'smooth' });
               }}
               className="btn btn-outline btn-sm"
               style={{ marginTop: '1rem', cursor: 'pointer', background: 'transparent' }}

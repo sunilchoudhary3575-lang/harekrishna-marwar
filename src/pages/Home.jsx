@@ -10,7 +10,6 @@ import Testimonials from '../components/Testimonials';
 
 import ImpactCounter from '../components/ImpactCounter';
 import WhyDonate from '../components/WhyDonate';
-import SevaSlabs from '../components/SevaSlabs';
 import PhotoGallery from '../components/PhotoGallery';
 import FinalCTA from '../components/FinalCTA';
 import StickyWidget from '../components/StickyWidget';
@@ -97,25 +96,15 @@ export default function Home() {
         {/* Section 3: Why Donate Section */}
         <WhyDonate />
         
-        {/* Mid-section: Two column layout for Slabs (Left) & Donation Form (Right) */}
+        {/* Mid-section: Centered Donation Form Panel */}
         <section className="section-pad bg-white relative" style={{ overflow: 'visible' }}>
           <div className="container" style={{ overflow: 'visible' }}>
-            <div className="lg:grid lg:grid-cols-12 lg:items-start lg:gap-12 space-y-12 lg:space-y-0" style={{ overflow: 'visible' }}>
-              {/* Left Column (Slabs & Story) */}
-              <div className="lg:col-span-7 space-y-16">
-                <SevaSlabs />
+            <div id="donation-form" style={{ width: '100%', maxWidth: '850px', zIndex: 10, overflow: 'visible', scrollMarginTop: '110px', margin: '0 auto' }}>
+              <div className="glass-card divine-shadow p-3 sm:p-6" style={{ borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-gold)', overflow: 'hidden' }}>
+                <Suspense fallback={<div className="p-8 text-center text-muted font-ui">Loading Donation Form...</div>}>
+                  <DonateForm />
+                </Suspense>
               </div>
-              
-              {/* Right Column (Sticky Form Panel) */}
-              <aside className="lg:col-span-5 relative" style={{ zIndex: 10, overflow: 'visible' }}>
-                <div className="sticky-sidebar" id="donation-form" style={{ scrollMarginTop: '110px' }}>
-                  <div className="glass-card divine-shadow" style={{ borderRadius: 'var(--radius-lg)', padding: '4px', border: '1px solid var(--border-gold)' }}>
-                    <Suspense fallback={<div className="p-8 text-center text-muted font-ui">Loading Donation Form...</div>}>
-                      <DonateForm />
-                    </Suspense>
-                  </div>
-                </div>
-              </aside>
             </div>
           </div>
         </section>

@@ -9,7 +9,7 @@ const navLinks = [
   { name: 'Home', href: '#hero' },
   { name: 'Impact', href: '#impact' },
   { name: 'Why Donate', href: '#why-donate' },
-  { name: 'Annadan Slabs', href: '#seva-slabs' },
+  { name: 'Sponsor Seva', href: '#donation-form' },
 ];
 
 /* ─── Scroll thresholds ─── */

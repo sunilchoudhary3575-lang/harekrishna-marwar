@@ -146,12 +146,7 @@ export default function PosterCarousel() {
             role="tab"
             aria-selected={index === current}
             aria-label={`Go to slide ${index + 1}: ${slide.headline}`}
-          >
-            {/* Progress fill for active dot */}
-            {index === current && !paused && (
-              <span className={styles.dotProgress} key={`progress-${current}`} />
-            )}
-          </button>
+          />
         ))}
       </div>
 

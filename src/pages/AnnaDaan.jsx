@@ -87,12 +87,12 @@ export default function AnnaDaan() {
               {/* Form Column (Span 5 on Desktop, order-1 on mobile so it is at the top) */}
               <div className="lg:col-span-5 order-1 lg:order-2 relative" style={{ zIndex: 10, overflow: 'visible' }}>
                 <aside className="sticky-sidebar" style={{ scrollMarginTop: '110px' }}>
-                  <div style={{
+                  <div className="p-3 sm:p-6" style={{
                     background: 'var(--bg-card)',
                     borderRadius: '1.5rem',
-                    padding: '4px',
                     border: '1px solid var(--border-gold)',
-                    boxShadow: '0 10px 30px rgba(230, 126, 34, 0.08)'
+                    boxShadow: '0 10px 30px rgba(230, 126, 34, 0.08)',
+                    overflow: 'hidden'
                   }}>
                     <div style={{
                       padding: '1.25rem 1rem 0.25rem 1rem',
