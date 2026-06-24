@@ -5,10 +5,11 @@ import { DONATE_URL } from '../config';
 const slides = [
   {
     id: 'temple-vision',
-    image: '/home page backgrond image.png',
+    image: '/hero-deities.jpg',
     headline: 'A Sacred Home for Krishna',
     subtext: 'Rising in Jodhpur. Opening March 2027.',
     href: `${DONATE_URL}?seva=mandir-nirman`,
+    portrait: true,
   },
   {
     id: 'construction',
@@ -103,30 +104,49 @@ export default function PosterCarousel() {
     >
       {/* Slides */}
       <div className={styles.track}>
-        {slides.map((slide, index) => (
-          <a
-            key={slide.id}
-            href={slide.href}
-            className={`${styles.slide} ${index === current ? styles.slideActive : ''}`}
-            aria-hidden={index !== current}
-            tabIndex={index === current ? 0 : -1}
-            aria-roledescription="slide"
-            aria-label={`${index + 1} of ${slides.length}: ${slide.headline}`}
-          >
-            <img
-              src={slide.image}
-              alt={slide.headline}
-              loading={index === 0 ? 'eager' : 'lazy'}
-              className={styles.slideImage}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0 }}
-            />
-            <div className={styles.slideOverlay} />
-            <div className={styles.slideContent}>
-              <h2 className={styles.slideHeadline}>{slide.headline}</h2>
-              <p className={styles.slideSubtext}>{slide.subtext}</p>
-            </div>
-          </a>
-        ))}
+        {slides.map((slide, index) => {
+          const isActive = index === current;
+          return (
+            <a
+              key={slide.id}
+              href={slide.href}
+              className={`${styles.slide} ${isActive ? styles.slideActive : ''}`}
+              aria-hidden={index !== current}
+              tabIndex={isActive ? 0 : -1}
+              aria-roledescription="slide"
+              aria-label={`${index + 1} of ${slides.length}: ${slide.headline}`}
+            >
+              {slide.portrait ? (
+                <>
+                  <img
+                    src={slide.image}
+                    alt=""
+                    aria-hidden="true"
+                    className={styles.slideImageBlur}
+                  />
+                  <img
+                    src={slide.image}
+                    alt={slide.headline}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    className={styles.slideImageContain}
+                  />
+                </>
+              ) : (
+                <img
+                  src={slide.image}
+                  alt={slide.headline}
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  className={styles.slideImage}
+                />
+              )}
+              <div className={styles.slideOverlay} />
+              <div className={styles.slideContent}>
+                <h2 className={styles.slideHeadline}>{slide.headline}</h2>
+                <p className={styles.slideSubtext}>{slide.subtext}</p>
+              </div>
+            </a>
+          );
+        })}
       </div>
 
       {/* Dot indicators */}
