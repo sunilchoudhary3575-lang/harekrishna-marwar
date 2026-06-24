@@ -138,9 +138,9 @@
 }
 
 .shortFrame {
-  flex: 0 0 270px;
-  max-width: 270px;
-  aspect-ratio: 2 / 3;
+  flex: 0 0 340px;
+  max-width: 340px;
+  aspect-ratio: 9 / 16;
   border-radius: 1.25rem;
   overflow: hidden;
   border: 1px solid var(--border-gold, rgba(212, 175, 55, 0.4));
@@ -249,8 +249,9 @@
   }
   
   .shortFrame {
-    flex: 0 0 190px;
-    max-width: 190px;
+    flex: 0 0 240px;
+    max-width: 240px;
+    aspect-ratio: 9 / 16;
   }
 
   .playBtn {

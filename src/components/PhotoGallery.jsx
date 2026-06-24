@@ -77,7 +77,7 @@ export default function PhotoGallery() {
 
   const scroll = (direction) => {
     if (gridRef.current) {
-      const scrollAmount = 300; // scroll by 300px
+      const scrollAmount = 364; // scroll by 340px (card) + 24px (gap)
       gridRef.current.scrollBy({
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth'
