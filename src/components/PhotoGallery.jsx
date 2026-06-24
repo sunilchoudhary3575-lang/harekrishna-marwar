@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Play } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 import styles from './PhotoGallery.module.css';
 
@@ -66,6 +66,7 @@ function VideoCard({ videoId, thumbnail, title }) {
 
 export default function PhotoGallery() {
   const [filter, setFilter] = useState('All');
+  const gridRef = useRef(null);
 
   // Filter out items with duplicate videoId in "All" view to prevent showing the same video twice
   const filteredItems = filter === 'All' 
@@ -73,6 +74,16 @@ export default function PhotoGallery() {
         self.findIndex(v => v.videoId === item.videoId) === index
       )
     : videoItems.filter(item => item.category === filter);
+
+  const scroll = (direction) => {
+    if (gridRef.current) {
+      const scrollAmount = 300; // scroll by 300px
+      gridRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   return (
     <section className={styles.section} id="gallery" aria-label="Media Gallery">
@@ -102,9 +113,19 @@ export default function PhotoGallery() {
             ))}
           </div>
         </ScrollReveal>
+      </div>
 
-        <ScrollReveal delay={0.1}>
-          <div className={styles.videoGrid}>
+      <ScrollReveal delay={0.1}>
+        <div className={styles.carouselWrapper}>
+          <button 
+            className={`${styles.navArrow} ${styles.prev}`} 
+            onClick={() => scroll('left')}
+            aria-label="Scroll left"
+          >
+            <ChevronLeft size={24} />
+          </button>
+
+          <div ref={gridRef} className={styles.videoGrid}>
             {filteredItems.map((item) => (
               <VideoCard
                 key={item.id}
@@ -114,8 +135,16 @@ export default function PhotoGallery() {
               />
             ))}
           </div>
-        </ScrollReveal>
-      </div>
+
+          <button 
+            className={`${styles.navArrow} ${styles.next}`} 
+            onClick={() => scroll('right')}
+            aria-label="Scroll right"
+          >
+            <ChevronRight size={24} />
+          </button>
+        </div>
+      </ScrollReveal>
     </section>
   );
 }
