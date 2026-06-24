@@ -31,9 +31,7 @@ const videoItems = [
   { id: 't2', videoId: 'HN0m_eRljRo', thumbnail: 'https://img.youtube.com/vi/HN0m_eRljRo/hqdefault.jpg', category: 'Temple', title: 'Mandir Nirman Progress 2' },
 ];
 
-function VideoCard({ videoId, thumbnail, title }) {
-  const [isPlaying, setIsPlaying] = useState(false);
-
+function VideoCard({ videoId, thumbnail, title, isPlaying, onPlay }) {
   return (
     <div className={styles.shortFrame}>
       {isPlaying ? (
@@ -46,7 +44,7 @@ function VideoCard({ videoId, thumbnail, title }) {
           className={styles.shortIframe}
         />
       ) : (
-        <div className={styles.thumbnailWrapper} onClick={() => setIsPlaying(true)}>
+        <div className={styles.thumbnailWrapper} onClick={onPlay}>
           <img
             src={thumbnail}
             alt={title}
@@ -66,7 +64,13 @@ function VideoCard({ videoId, thumbnail, title }) {
 
 export default function PhotoGallery() {
   const [filter, setFilter] = useState('All');
+  const [activeVideoId, setActiveVideoId] = useState(null);
   const gridRef = useRef(null);
+
+  const handleFilterChange = (c) => {
+    setFilter(c);
+    setActiveVideoId(null);
+  };
 
   // Filter out items with duplicate videoId in "All" view to prevent showing the same video twice
   const filteredItems = filter === 'All' 
@@ -106,7 +110,7 @@ export default function PhotoGallery() {
               <button
                 key={c}
                 className={`${styles.filterBtn} ${filter === c ? styles.filterActive : ''}`}
-                onClick={() => setFilter(c)}
+                onClick={() => handleFilterChange(c)}
               >
                 {c}
               </button>
@@ -132,6 +136,8 @@ export default function PhotoGallery() {
                 videoId={item.videoId}
                 thumbnail={item.thumbnail}
                 title={item.title}
+                isPlaying={activeVideoId === item.id}
+                onPlay={() => setActiveVideoId(item.id)}
               />
             ))}
           </div>
