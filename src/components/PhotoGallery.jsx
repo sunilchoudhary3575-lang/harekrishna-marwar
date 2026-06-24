@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 import styles from './PhotoGallery.module.css';
@@ -66,6 +66,31 @@ export default function PhotoGallery() {
   const [filter, setFilter] = useState('All');
   const [activeVideoId, setActiveVideoId] = useState(null);
   const gridRef = useRef(null);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Scroll away detect: if gallery section goes out of viewport, stop active video playback
+        if (!entry.isIntersecting) {
+          setActiveVideoId(null);
+        }
+      },
+      {
+        threshold: 0.05, // Trigger when 95% of the section has scrolled out of view
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
 
   const handleFilterChange = (c) => {
     setFilter(c);
@@ -90,7 +115,7 @@ export default function PhotoGallery() {
   };
 
   return (
-    <section className={styles.section} id="gallery" aria-label="Media Gallery">
+    <section ref={sectionRef} className={styles.section} id="gallery" aria-label="Media Gallery">
       <div className="container">
         <ScrollReveal>
           <div className={styles.header}>
