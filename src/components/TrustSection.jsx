@@ -1,41 +1,13 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Flame, Flower2, BadgeCheck, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Flame, Flower2, BadgeCheck } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 import styles from './TrustSection.module.css';
-
-const sevaRoutes = {
-  'Gau Seva': '/seva/gau-seva',
-  'Anna Daan Seva': '/seva/anna-daan',
-  'Mandir Nirman': '/seva/mandir-nirman',
-};
 
 const trustItems = [
   { icon: Flame, text: '14+ Years Serving' },
   { icon: Flower2, text: '1.5 Lakh+ Meals Served' },
   { icon: ShieldCheck, text: '50+ Cows Protected' },
   { icon: BadgeCheck, text: '80G Tax Benefit Available' },
-];
-
-const proofItems = [
-  {
-    title: 'Anna Daan Seva',
-    desc: 'Daily prasadam offering with community participation.',
-    img: '/gallery/gallery-anna-daan-serving.jpg',
-    alt: 'Volunteers distributing free prasadam during Anna Daan seva in Jodhpur',
-  },
-  {
-    title: 'Gau Seva',
-    desc: 'Sacred cow care supported by devotees across Marwar.',
-    img: '/gallery/gallery-gau-seva-volunteer.jpg',
-    alt: 'Desi cows being cared for at Hare Krishna Marwar Mandir Gaushala Jodhpur',
-  },
-  {
-    title: 'Mandir Nirman',
-    desc: 'A growing spiritual home built with collective seva.',
-    img: '/mandir-nirman-seva.png',
-    alt: 'Hare Krishna Marwar Mandir temple facade in Jodhpur Rajasthan',
-  },
 ];
 
 export default function TrustSection() {
@@ -66,37 +38,6 @@ export default function TrustSection() {
             ))}
           </div>
         </ScrollReveal>
-
-        <div className={styles.proofGrid}>
-          {proofItems.map((item, i) => (
-            <ScrollReveal key={item.title} delay={0.1 + i * 0.12} y={40}>
-              <Link to={sevaRoutes[item.title] || '/#'} className={styles.proofLink}>
-                <motion.article 
-                  className={styles.proofCard}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ type: 'spring', stiffness: 220, damping: 20 }}
-                >
-                  <div className={styles.proofImageWrap}>
-                    <img
-                      src={item.img}
-                      alt={item.alt}
-                      className={styles.proofImage}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0 }}
-                    />
-                    <div className={styles.proofOverlay}>
-                      <span>View Impact <ArrowRight size={14} /></span>
-                    </div>
-                  </div>
-                  <div className={styles.proofBody}>
-                    <h3>{item.title}</h3>
-                    <p>{item.desc}</p>
-                  </div>
-                </motion.article>
-              </Link>
-            </ScrollReveal>
-          ))}
-        </div>
       </div>
     </section>
   );

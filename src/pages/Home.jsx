@@ -6,7 +6,6 @@ import SectionReveal from '../components/SectionReveal';
 
 import Welcome from '../components/Welcome';
 import TrustSection from '../components/TrustSection';
-import Testimonials from '../components/Testimonials';
 
 import ImpactCounter from '../components/ImpactCounter';
 import WhyDonate from '../components/WhyDonate';
@@ -114,9 +113,6 @@ export default function Home() {
         
         {/* Section 6: Photo Gallery */}
         <PhotoGallery />
-        
-        {/* Section 7: Testimonials Slider */}
-        <SectionReveal as="div" delay={0}><Testimonials /></SectionReveal>
         
         {/* Section 8: Why People Trust Us (Trust Section) */}
         <TrustSection />

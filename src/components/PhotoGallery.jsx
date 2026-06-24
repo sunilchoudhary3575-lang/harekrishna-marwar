@@ -1,52 +1,78 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, ZoomIn } from 'lucide-react';
+import { Play } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 import styles from './PhotoGallery.module.css';
 
 const categories = ['All', 'Prasadam', 'Gau Seva', 'Festivals', 'Temple'];
 
-const photos = [
-  { src: 'gallery-anna-daan-serving.jpg', cat: 'Prasadam', title: 'Daily Prasadam Distribution in Jodhpur', aspect: 'tall' },
-  { src: 'gallery-gau-seva-monks.jpg', cat: 'Gau Seva', title: 'Gaushala: Devotees Feeding Cows', aspect: 'tall' },
-  { src: 'gallery-gau-seva-volunteer.jpg', cat: 'Gau Seva', title: 'Go-Protection & Care activities', aspect: 'tall' },
-  { src: 'gallery-anna-daan-students.jpg', cat: 'Prasadam', title: 'Nutritious Meals for School Children', aspect: 'tall' },
-  { src: 'mandir event/mandir.JPG', cat: 'Temple', title: 'Upcoming Mandir Front Elevation' },
-  { src: 'mandir event/shri krishna mandir.JPG', cat: 'Temple', title: 'Sri Sri Radha Madan Mohan Sanctum' },
-  { src: 'mandir event/krishna ji.JPG', cat: 'Festivals', title: 'Krishna Janmashtami Shringar', aspect: 'tall' },
-  { src: 'mandir event/guru ji.JPG', cat: 'Festivals', title: 'Spiritual Discourses and Harinam Festivals' },
+// Configure your video items here
+const videoItems = [
+  // Top video for All tab (also in Temple category)
+  { id: 'top1', videoId: 'Hmu6S_kxQ50', thumbnail: 'https://img.youtube.com/vi/Hmu6S_kxQ50/hqdefault.jpg', category: 'Temple', title: 'Temple Introduction' },
+
+  // Prasadam category shorts
+  { id: 'p1', videoId: 'rJNWTNjNCcQ', thumbnail: 'https://img.youtube.com/vi/rJNWTNjNCcQ/hqdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 1' },
+  { id: 'p2', videoId: 'FkWOd2Qviv4', thumbnail: 'https://img.youtube.com/vi/FkWOd2Qviv4/hqdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 2' },
+  { id: 'p3', videoId: 'AvE3bqPnJIc', thumbnail: 'https://img.youtube.com/vi/AvE3bqPnJIc/hqdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 3' },
+  { id: 'p4', videoId: 'O4dSd4mzKCs', thumbnail: 'https://img.youtube.com/vi/O4dSd4mzKCs/hqdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 4' },
+  { id: 'p5', videoId: '4Qt4SRKrg3I', thumbnail: 'https://img.youtube.com/vi/4Qt4SRKrg3I/hqdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 5' },
+  { id: 'p6', videoId: 'NFbdbY4RQmg', thumbnail: 'https://img.youtube.com/vi/NFbdbY4RQmg/hqdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 6' },
+  { id: 'p7', videoId: '6jP1etW-PHI', thumbnail: 'https://img.youtube.com/vi/6jP1etW-PHI/hqdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 7' },
+
+  // Gau Seva category shorts
+  { id: 'g1', videoId: 'w7Pu43M0i-I', thumbnail: 'https://img.youtube.com/vi/w7Pu43M0i-I/hqdefault.jpg', category: 'Gau Seva', title: 'Gau Seva Marwar' },
+
+  // Festivals category shorts
+  { id: 'f1', videoId: 'U6Hvq8yxAsk', thumbnail: 'https://img.youtube.com/vi/U6Hvq8yxAsk/hqdefault.jpg', category: 'Festivals', title: 'Festivals & Harinam 1' },
+  { id: 'f2', videoId: 'w6HTmB580f0', thumbnail: 'https://img.youtube.com/vi/w6HTmB580f0/hqdefault.jpg', category: 'Festivals', title: 'Festivals & Harinam 2' },
+
+  // Temple category shorts
+  { id: 't1', videoId: 'wn_43IP2koQ', thumbnail: 'https://img.youtube.com/vi/wn_43IP2koQ/hqdefault.jpg', category: 'Temple', title: 'Mandir Nirman Progress 1' },
+  { id: 't2', videoId: 'HN0m_eRljRo', thumbnail: 'https://img.youtube.com/vi/HN0m_eRljRo/hqdefault.jpg', category: 'Temple', title: 'Mandir Nirman Progress 2' },
 ];
 
-function GalleryImage({ src, alt, className }) {
-  const [showFallback, setShowFallback] = useState(false);
-  const safeSrc = `/gallery/${src.split('/').map(encodeURIComponent).join('/')}`;
-
-  if (showFallback) {
-    return (
-      <div className={`img-placeholder ${className ?? ''}`} style={{ height: '240px' }}>
-        <span>{src}</span>
-      </div>
-    );
-  }
+function VideoCard({ videoId, thumbnail, title }) {
+  const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <img
-      src={safeSrc}
-      alt={alt}
-      className={className}
-      width={600}
-      height={450}
-      loading="lazy"
-      onError={() => setShowFallback(true)}
-    />
+    <div className={styles.shortFrame}>
+      {isPlaying ? (
+        <iframe
+          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+          title={title}
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className={styles.shortIframe}
+        />
+      ) : (
+        <div className={styles.thumbnailWrapper} onClick={() => setIsPlaying(true)}>
+          <img
+            src={thumbnail}
+            alt={title}
+            className={styles.videoThumb}
+          />
+          <div className={styles.videoOverlay} />
+          <div className={styles.playBtnContainer}>
+            <button className={styles.playBtn} aria-label={`Play video: ${title}`}>
+              <Play size={24} fill="white" color="white" />
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
 export default function PhotoGallery() {
   const [filter, setFilter] = useState('All');
-  const [lightbox, setLightbox] = useState(null);
 
-  const filtered = filter === 'All' ? photos : photos.filter(p => p.cat === filter);
+  // Filter out items with duplicate videoId in "All" view to prevent showing the same video twice
+  const filteredItems = filter === 'All' 
+    ? videoItems.filter((item, index, self) => 
+        self.findIndex(v => v.videoId === item.videoId) === index
+      )
+    : videoItems.filter(item => item.category === filter);
 
   return (
     <section className={styles.section} id="gallery" aria-label="Media Gallery">
@@ -77,67 +103,19 @@ export default function PhotoGallery() {
           </div>
         </ScrollReveal>
 
-        {/* Photos Grid */}
-        <motion.div className={styles.grid} layout>
-          <AnimatePresence mode="popLayout">
-            {filtered.map((p, i) => (
-              <motion.div
-                key={p.src}
-                className={`${styles.gridItem} ${p.aspect === 'tall' ? styles.tall : ''}`}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3, delay: i * 0.02 }}
-                onClick={() => setLightbox(p)}
-              >
-                <div className={styles.imgWrap}>
-                  <GalleryImage src={p.src} alt={p.title} className={styles.gridImage} />
-                  <div className={styles.itemOverlay}>
-                    <ZoomIn size={24} className={styles.zoomIcon} />
-                    <span className={styles.itemTitle}>{p.title}</span>
-                  </div>
-                </div>
-              </motion.div>
+        <ScrollReveal delay={0.1}>
+          <div className={styles.videoGrid}>
+            {filteredItems.map((item) => (
+              <VideoCard
+                key={item.id}
+                videoId={item.videoId}
+                thumbnail={item.thumbnail}
+                title={item.title}
+              />
             ))}
-          </AnimatePresence>
-        </motion.div>
+          </div>
+        </ScrollReveal>
       </div>
-
-      {/* Lightbox Modal */}
-      <AnimatePresence>
-        {lightbox && (
-          <motion.div
-            className={styles.lightbox}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setLightbox(null)}
-          >
-            <button className={styles.lightboxClose} aria-label="Close image">
-              <X size={28} />
-            </button>
-            <motion.div
-              className={styles.lightboxContent}
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className={styles.lightboxImgWrap}>
-                <img
-                  src={`/gallery/${lightbox.src.split('/').map(encodeURIComponent).join('/')}`}
-                  alt={lightbox.title}
-                  className={styles.lightboxImage}
-                  width={1200}
-                  height={900}
-                />
-              </div>
-              <p className={styles.lightboxTitle}>{lightbox.title}</p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }

@@ -56,93 +56,6 @@
   border-color: rgba(107, 142, 122, 0.35);
 }
 
-.proofGrid {
-  margin-top: 1.6rem;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-.proofLink {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
-.proofCard {
-  overflow: hidden;
-  border-radius: 1.2rem;
-  border: 1px solid rgba(255, 122, 0, 0.18);
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 14px 28px rgba(118, 69, 18, 0.12);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.proofImageWrap {
-  position: relative;
-  height: 170px;
-  overflow: hidden;
-}
-
-.proofOverlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(230, 126, 34, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  backdrop-filter: blur(2px);
-}
-
-.proofOverlay span {
-  background: white;
-  color: var(--saffron);
-  padding: 0.5rem 1rem;
-  border-radius: 99px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  transform: translateY(10px);
-  transition: transform 0.3s ease;
-}
-
-.proofLink:hover .proofOverlay {
-  opacity: 1;
-}
-
-.proofLink:hover .proofOverlay span {
-  transform: translateY(0);
-}
-
-.proofImage {
-  object-fit: cover;
-}
-
-.proofBody {
-  padding: 1rem 1rem 1.15rem;
-}
-
-.proofBody h3 {
-  font-family: var(--font-heading);
-  font-size: 1.05rem;
-  margin-bottom: 0.35rem;
-  color: var(--text-primary);
-}
-
-.proofBody p {
-  font-family: var(--font-body);
-  font-size: 0.92rem;
-  line-height: 1.55;
-  color: var(--text-secondary);
-}
-
 @media (max-width: 768px) {
   .strip {
     grid-template-columns: auto;
@@ -167,11 +80,4 @@
     white-space: nowrap;
   }
 
-  .proofGrid {
-    grid-template-columns: 1fr;
-  }
-  
-  .proofImageWrap {
-    height: 140px;
-  }
 }

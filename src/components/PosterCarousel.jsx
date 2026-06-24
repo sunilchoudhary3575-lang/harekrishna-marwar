@@ -24,13 +24,6 @@ const slides = [
     subtext: 'Every ₹34 feeds a hungry devotee today.',
     href: `${DONATE_URL}?seva=anna-daan`,
   },
-  {
-    id: 'gau-seva',
-    image: '/gau dan seva.png',
-    headline: 'Serve the Sacred',
-    subtext: 'Protect Gau Mata. ₹2,100 cares for a cow for a month.',
-    href: `${DONATE_URL}?seva=gau-seva`,
-  },
 ];
 
 const INTERVAL = 4000;
