@@ -7,28 +7,25 @@ const categories = ['All', 'Prasadam', 'Gau Seva', 'Festivals', 'Temple'];
 
 // Configure your video items here
 const videoItems = [
-  // Top video for All tab (also in Temple category)
-  { id: 'top1', videoId: 'Hmu6S_kxQ50', thumbnail: 'https://img.youtube.com/vi/Hmu6S_kxQ50/hqdefault.jpg', category: 'Temple', title: 'Temple Introduction' },
-
   // Prasadam category shorts
-  { id: 'p1', videoId: 'rJNWTNjNCcQ', thumbnail: 'https://img.youtube.com/vi/rJNWTNjNCcQ/hqdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 1' },
-  { id: 'p2', videoId: 'FkWOd2Qviv4', thumbnail: 'https://img.youtube.com/vi/FkWOd2Qviv4/hqdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 2' },
-  { id: 'p3', videoId: 'AvE3bqPnJIc', thumbnail: 'https://img.youtube.com/vi/AvE3bqPnJIc/hqdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 3' },
-  { id: 'p4', videoId: 'O4dSd4mzKCs', thumbnail: 'https://img.youtube.com/vi/O4dSd4mzKCs/hqdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 4' },
-  { id: 'p5', videoId: '4Qt4SRKrg3I', thumbnail: 'https://img.youtube.com/vi/4Qt4SRKrg3I/hqdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 5' },
-  { id: 'p6', videoId: 'NFbdbY4RQmg', thumbnail: 'https://img.youtube.com/vi/NFbdbY4RQmg/hqdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 6' },
-  { id: 'p7', videoId: '6jP1etW-PHI', thumbnail: 'https://img.youtube.com/vi/6jP1etW-PHI/hqdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 7' },
+  { id: 'p1', videoId: 'rJNWTNjNCcQ', thumbnail: 'https://img.youtube.com/vi/rJNWTNjNCcQ/maxresdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 1' },
+  { id: 'p2', videoId: 'FkWOd2Qviv4', thumbnail: 'https://img.youtube.com/vi/FkWOd2Qviv4/maxresdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 2' },
+  { id: 'p3', videoId: 'AvE3bqPnJIc', thumbnail: 'https://img.youtube.com/vi/AvE3bqPnJIc/maxresdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 3' },
+  { id: 'p4', videoId: 'O4dSd4mzKCs', thumbnail: 'https://img.youtube.com/vi/O4dSd4mzKCs/maxresdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 4' },
+  { id: 'p5', videoId: '4Qt4SRKrg3I', thumbnail: 'https://img.youtube.com/vi/4Qt4SRKrg3I/maxresdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 5' },
+  { id: 'p6', videoId: 'NFbdbY4RQmg', thumbnail: 'https://img.youtube.com/vi/NFbdbY4RQmg/maxresdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 6' },
+  { id: 'p7', videoId: '6jP1etW-PHI', thumbnail: 'https://img.youtube.com/vi/6jP1etW-PHI/maxresdefault.jpg', category: 'Prasadam', title: 'Anna Daan Seva 7' },
 
   // Gau Seva category shorts
-  { id: 'g1', videoId: 'w7Pu43M0i-I', thumbnail: 'https://img.youtube.com/vi/w7Pu43M0i-I/hqdefault.jpg', category: 'Gau Seva', title: 'Gau Seva Marwar' },
+  { id: 'g1', videoId: 'w7Pu43M0i-I', thumbnail: 'https://img.youtube.com/vi/w7Pu43M0i-I/maxresdefault.jpg', category: 'Gau Seva', title: 'Gau Seva Marwar' },
 
   // Festivals category shorts
-  { id: 'f1', videoId: 'U6Hvq8yxAsk', thumbnail: 'https://img.youtube.com/vi/U6Hvq8yxAsk/hqdefault.jpg', category: 'Festivals', title: 'Festivals & Harinam 1' },
-  { id: 'f2', videoId: 'w6HTmB580f0', thumbnail: 'https://img.youtube.com/vi/w6HTmB580f0/hqdefault.jpg', category: 'Festivals', title: 'Festivals & Harinam 2' },
+  { id: 'f1', videoId: 'U6Hvq8yxAsk', thumbnail: 'https://img.youtube.com/vi/U6Hvq8yxAsk/maxresdefault.jpg', category: 'Festivals', title: 'Festivals & Harinam 1' },
+  { id: 'f2', videoId: 'w6HTmB580f0', thumbnail: 'https://img.youtube.com/vi/w6HTmB580f0/maxresdefault.jpg', category: 'Festivals', title: 'Festivals & Harinam 2' },
 
   // Temple category shorts
-  { id: 't1', videoId: 'wn_43IP2koQ', thumbnail: 'https://img.youtube.com/vi/wn_43IP2koQ/hqdefault.jpg', category: 'Temple', title: 'Mandir Nirman Progress 1' },
-  { id: 't2', videoId: 'HN0m_eRljRo', thumbnail: 'https://img.youtube.com/vi/HN0m_eRljRo/hqdefault.jpg', category: 'Temple', title: 'Mandir Nirman Progress 2' },
+  { id: 't1', videoId: 'wn_43IP2koQ', thumbnail: 'https://img.youtube.com/vi/wn_43IP2koQ/maxresdefault.jpg', category: 'Temple', title: 'Mandir Nirman Progress 1' },
+  { id: 't2', videoId: 'HN0m_eRljRo', thumbnail: 'https://img.youtube.com/vi/HN0m_eRljRo/maxresdefault.jpg', category: 'Temple', title: 'Mandir Nirman Progress 2' },
 ];
 
 function VideoCard({ videoId, thumbnail, title, isPlaying, onPlay }) {

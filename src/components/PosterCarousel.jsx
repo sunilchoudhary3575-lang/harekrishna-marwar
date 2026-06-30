@@ -18,13 +18,6 @@ const slides = [
     subtext: '310 families have claimed their legacy. Join them.',
     href: `${DONATE_URL}?seva=mandir-nirman`,
   },
-  {
-    id: 'anna-daan',
-    image: '/aan dan seva.png',
-    headline: '1.5 Lakh Meals Served',
-    subtext: 'Every ₹34 feeds a hungry devotee today.',
-    href: `${DONATE_URL}?seva=anna-daan`,
-  },
 ];
 
 const INTERVAL = 4000;
